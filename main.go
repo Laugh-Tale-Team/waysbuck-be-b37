@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"waysbuck/database"
+	"waysbuck/pkg/mysql"
 	"waysbuck/routes"
 
 	"github.com/gorilla/handlers"
@@ -19,26 +20,26 @@ func main() {
 		panic("Failed to load env file")
 	}
 
-	// On http (API)
-	r := mux.NewRouter()
 	// initial DB
-	//mysql.DatabaseInit()
+	mysql.DatabaseInit()
 
 	// run migration
 	database.RunMigration()
-	
+
+	r := mux.NewRouter()
+
 	routes.RouteInit(r.PathPrefix("/api/v1").Subrouter())
 
+	//path file
 	r.PathPrefix("/uploads").Handler(http.StripPrefix("/uploads/", http.FileServer(http.Dir("./uploads"))))
 
-	// Setup allowed Header, Method, and Origin for CORS on this below code ...
 	var AllowedHeaders = handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
 	var AllowedMethods = handlers.AllowedMethods([]string{"GET", "POST", "PUT", "HEAD", "OPTIONS", "PATCH", "DELETE"})
 	var AllowedOrigins = handlers.AllowedOrigins([]string{"*"})
 
-	var port = os.Getenv("PORT");
+	// Modify 1 line this below code get port from env ...
+	var port = os.Getenv("PORT")
 
 	fmt.Println("server running localhost:" + port)
-	// Embed the setup allowed in 2 parameter on this below code ...
 	http.ListenAndServe(":"+port, handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
 }
