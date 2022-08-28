@@ -34,9 +34,9 @@ func (h *handlerCart) FindCarts(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(response)
 	}
 
-	for i, p := range carts {
-		carts[i].Product.Image = path_file_cart + p.Product.Image
-	}
+	// for i, p := range carts {
+	// 	carts[i].Product.Image = path_file_cart + p.Product.Image
+	// }
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: carts}
@@ -193,9 +193,9 @@ func (h *handlerCart) FindCartsById(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(response)
 	}
 
-	for i, p := range cart {
-		cart[i].Product.Image = path_file_cart + p.Product.Image
-	}
+	// for i, p := range cart {
+	// 	cart[i].Product.Image = path_file_cart + p.Product.Image
+	// }
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: cart}
