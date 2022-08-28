@@ -9,9 +9,9 @@ type Cart struct {
 	SubTotal      	int                 `json:"subtotal" gorm:"type: int"`
 	ProductId     	int                 `json:"product_id" gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	Product       	ProductTransaction  `json:"product"`
-	ToppingID     	[]int               `json:"topping_id" gorm:"-"`
+	ToppingID     	[]int               `json:"-" gorm:"-"`
 	Topping       	[]Topping           `json:"topping" gorm:"many2many:cart_toppings; constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
-	TransactionID 	int 				`json:"transaction_id" gorm:"type: int"`
+	TransactionID 	int 				`json:"-" gorm:"type: int"`
 	Transaction		TransactionResponse `json:"transaction"`
 	Status			string				`json:"status"`
 	CreatedAt     	time.Time           `json:"created_at"`

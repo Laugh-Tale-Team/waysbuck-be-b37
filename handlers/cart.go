@@ -81,17 +81,17 @@ func (h *handlerCart) CreateCart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	requestForm := models.Cart{
-		ProductId:     request.ProductID,
-		TransactionID:	idTrans,
-		QTY:           request.QTY,
-		SubTotal:      request.SubTotal,
-		ToppingID:     request.ToppingID,
-		Status:        request.Status,
-	}
+	// requestForm := models.Cart{
+	// 	ProductId:     request.ProductID,
+	// 	TransactionID:	idTrans,
+	// 	QTY:           request.QTY,
+	// 	SubTotal:      request.SubTotal,
+	// 	ToppingID:     request.ToppingID,
+	// 	Status:        request.Status,
+	// }
 
 	validation := validator.New()
-	errr := validation.Struct(requestForm)
+	errr := validation.Struct(request)
 	if errr != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		response := dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()}
